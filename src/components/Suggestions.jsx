@@ -13,18 +13,18 @@ const appear = keyframes`
 
 const Div = styled.div`
 	position: absolute;
+	z-index: 100;
 	left: 0;
 	right: 0;
 	min-width: 100vw;
+	text-align: center;
 	height: 6rem;
 	overflow-x: scroll;
 	overflow-y: hidden;
 	white-space: nowrap;
 	background-color: rgba(0, 0, 0, 0.2);
 	backdrop-filter: blur(2rem);
-	z-index: 100;
 	animation: ${appear} 0.2s linear;
-	text-align: center;
 
 	&::-webkit-scrollbar {
 		display: none;
@@ -66,16 +66,14 @@ function handleScroll(e) {
 	element.scrollLeft += e.deltaY;
 }
 
-function Suggestions({ allCountries, inputValue, handleClickSuggestion, userCountries }) {
+function Suggestions({ allCountries, inputValue, handleClickSuggestion, userCountries, setInputValue }) {
 	const suggestionsDiv = useRef();
-	let index = useRef(0);
-	console.log(index);
+	const index = useRef(0);
 
-	let arrFiltered;
 	let listSuggestions;
 
 	if (inputValue && allCountries) {
-		arrFiltered = filterCountries(allCountries, userCountries, inputValue);
+		const arrFiltered = filterCountries(allCountries, userCountries, inputValue);
 		listSuggestions = arrFiltered.map((country) => {
 			return <Suggestion key={country.name}>{country.name}</Suggestion>;
 		});
@@ -87,10 +85,9 @@ function Suggestions({ allCountries, inputValue, handleClickSuggestion, userCoun
 	}
 
 	useEffect(() => {
+		//this function handles the keyboard control of the suggestions div
 		function handleKeyboard(e) {
 			const maxIndex = suggestionsDiv.current.children.length - 1;
-			console.log(e);
-			console.log(index.current);
 			switch (e.keyCode) {
 				case 40: //arrow-down
 					suggestionsDiv.current.children[0].focus();

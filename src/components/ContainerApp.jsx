@@ -22,9 +22,10 @@ const Container = styled.div`
 	padding: 0.6rem;
 	border: 1px solid #ccc;
 	border-radius: 4px;
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: ${({ theme }) => theme.colors.tertiary};
 	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
 	animation: ${appear} 0.5s ease-in-out;
+	transition: background-color 1s linear;
 `;
 
 const initialState = [
@@ -98,6 +99,7 @@ function ContainerApp() {
 					allCountries={allCountries}
 					inputValue={inputValue}
 					userCountries={userCountries}
+					setInputValue={setInputValue}
 				/>
 			)}
 

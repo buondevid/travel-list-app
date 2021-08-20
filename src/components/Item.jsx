@@ -27,14 +27,18 @@ const Input = styled.input`
 	&:hover {
 		transform: scale(1.2);
 	}
+
+	&:checked label {
+	}
 `;
 
 const Label = styled.label`
 	transition: all 0.5s;
+	color: ${({ theme }) => theme.colors.text_primary};
 
 	${Input}:checked ~ & {
-		color: #b3b3b3;
 		font-style: italic;
+		font-size: 1.5rem;
 		margin-left: 3rem;
 	}
 `;
@@ -43,7 +47,7 @@ const DeleteButton = styled.button`
 	visibility: hidden;
 	opacity: 0;
 	position: absolute;
-	color: #8d7d77;
+	color: ${({ theme }) => theme.colors.secondary};
 	padding: 0.5rem;
 	cursor: pointer;
 	right: 2rem;

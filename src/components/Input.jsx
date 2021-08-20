@@ -5,7 +5,7 @@ const StyledInput = styled.input`
 	appearance: none;
 	outline: none;
 	text-overflow: ellipsis;
-	border: 1px solid #3b3b3d;
+	border: 1px solid ${({ theme }) => theme.colors.text_secondary};
 	border-radius: 4px;
 	width: 100%;
 	padding: 1.5rem;
@@ -17,8 +17,8 @@ const StyledInput = styled.input`
 	}
 
 	&:focus {
-		border: 1px solid #8d7d77;
-		box-shadow: 0 0 1px 1px #8d7d77;
+		border: 1px solid ${({ theme }) => theme.colors.secondary};
+		box-shadow: 0 0 1px 3px ${({ theme }) => theme.colors.secondary};
 	}
 
 	&::placeholder {
@@ -28,9 +28,8 @@ const StyledInput = styled.input`
 `;
 
 function Input({ handleInputChange, inputValue }) {
-
 	function handleBlur(e) {
-		console.log(e.target)
+		console.log(e.target);
 		e.target === document.body && handleInputChange('');
 	}
 	return (

@@ -28,11 +28,12 @@ const GlobalStyle = createGlobalStyle`
 		display: flex;
 		flex-direction: column;
 		padding-top: 5rem;
-		background-color: #efd0ca;
+		background-color: ${({theme}) => theme.colors.primary};
 		align-items: center;
 		font-size: 2rem;
 		height: 100vh;
 		width: 100%;
+		transition: background-color 1s linear;
 		-webkit-font-smoothing: antialiased;
  		-moz-font-smoothing: antialiased;
  		-ms-font-smoothing: antialiased;

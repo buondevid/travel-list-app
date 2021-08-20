@@ -6,15 +6,15 @@ const Button = styled.button`
 	transform: translateY(-50%);
 	margin: 0 0.7rem;
 	padding: 0.5rem;
-	border: 2px dashed #8d7d77;
+	border: 2px dashed ${({ theme }) => theme.colors.secondary};
 	border-radius: 2rem;
 	appearance: none;
 	transition: all 0.3s;
 
 	&:hover,
 	&:focus {
-		background-color: #8d7d77;
-		color: #efd0ca;
+		background-color: ${({ theme }) => theme.colors.secondary};
+		color: ${({ theme }) => theme.colors.primary};
 	}
 `;
 

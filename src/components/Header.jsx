@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 const StyledHeader = styled.header`
 	margin: 5% 0;
@@ -7,15 +8,43 @@ const StyledHeader = styled.header`
 
 const H1 = styled.h1`
 	font-size: 7rem;
-	color: #b3b3b3;
-	color: rgba(141, 125, 119);
+	color: ${({ theme }) => theme.colors.secondary};
 	text-shadow: -1px -1px rgb(255, 225, 213);
+	transition: color 0.5s linear;
 `;
 
-function Header() {
+const Button = styled.button`
+	background: none;
+	border: none;
+	font-size: 4rem;
+	margin: 1rem;
+	transform: translateY(-50vh);
+	transition: all 1s;
+`;
+
+const ButtonSun = styled(Button)`
+	${(props) => props.theme === 'dark' && 'transform: translateY(0)'}
+`;
+
+const ButtonMoon = styled(Button)`
+	${(props) => props.theme === 'light' && 'transform: translateY(0)'}
+`;
+
+function Header({ chooseTheme }) {
+	const themeCtx = useContext(ThemeContext);
+	const theme = themeCtx.name;
+	console.log(theme);
 	return (
 		<StyledHeader>
-			<H1>Travel-List</H1>
+			<H1>
+				<ButtonSun theme={theme} onClick={() => chooseTheme('light')}>
+					🔆
+				</ButtonSun>
+				Travel-List
+				<ButtonMoon theme={theme} onClick={() => chooseTheme('dark')}>
+					🌙
+				</ButtonMoon>
+			</H1>
 		</StyledHeader>
 	);
 }

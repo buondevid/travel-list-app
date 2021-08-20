@@ -20,7 +20,7 @@ const Icon = styled.button`
 	border-radius: 50%;
 	z-index: 10;
 	border: none;
-	background: #8d7d77;
+	background: ${({ theme }) => theme.colors.secondary};
 	transition: all 0.3s;
 
 	&:hover {
@@ -48,7 +48,7 @@ function compare(putBeforeVisitedCountries) {
 
 		if (isVisitedA - isVisitedB !== 0) {
 			comparison = isVisitedB - isVisitedA;
-			return putBeforeVisitedCountries ? comparison : comparison * -1;
+			return putBeforeVisitedCountries ? comparison * -1 : comparison;
 		}
 
 		if (countryA > countryB) {
@@ -76,8 +76,8 @@ function ListItems({ userCountries, handleCheckboxChange, handleDeleteItem }) {
 	});
 
 	const title = isDefaultOrder
-		? 'Click to put unvisited places first'
-		: 'Click to put visited places first';
+		? 'Click to put visited places first'
+		: 'Click to put unvisited places first';
 
 	function handleIconClick(e) {
 		e.stopPropagation();
