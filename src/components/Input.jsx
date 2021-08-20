@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledInput = styled.input`
-position: relative;
+	position: relative;
 	appearance: none;
 	outline: none;
 	text-overflow: ellipsis;
@@ -27,8 +27,20 @@ position: relative;
 	}
 `;
 
-function Input() {
-	return <StyledInput placeholder='Country I want to visit'></StyledInput>;
+function Input({ handleInputChange, inputValue }) {
+
+	function handleBlur(e) {
+		console.log(e.target)
+		e.target === document.body && handleInputChange('');
+	}
+	return (
+		<StyledInput
+			value={inputValue}
+			onChange={(e) => handleInputChange(e.target.value)}
+			onClick={handleBlur}
+			placeholder='Country I want to visit'
+		></StyledInput>
+	);
 }
 
 export default Input;
