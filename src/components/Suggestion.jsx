@@ -6,7 +6,7 @@ const Button = styled.button`
 	transform: translateY(-50%);
 	margin: 0 0.7rem;
 	padding: 0.5rem;
-	border: 2px dashed ${({ theme }) => theme.colors.secondary};
+	border: 2px solid ${({ theme }) => theme.colors.secondary};
 	border-radius: 2rem;
 	appearance: none;
 	transition: all 0.3s;
@@ -14,7 +14,8 @@ const Button = styled.button`
 	&:hover,
 	&:focus {
 		background-color: ${({ theme }) => theme.colors.secondary};
-		color: ${({ theme }) => theme.colors.primary};
+		color: ${({ theme }) => (theme.name === 'light' ? theme.colors.primary : 'black')};
+		transform: translateY(-60%);
 	}
 `;
 

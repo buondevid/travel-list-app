@@ -17,7 +17,6 @@ const themeDark = {
 		primary: '#8d7d77',
 		secondary: '#efd0ca',
 		tertiary: 'rgba(0, 0, 0, 0.4)',
-		// text_primary: '#a9a9a9',
 		text_primary: 'white',
 		text_secondary: 'black',
 	},
@@ -25,9 +24,7 @@ const themeDark = {
 
 const Theme = ({ children, theme }) => {
 	return (
-		<ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
-			{children}
-		</ThemeProvider>
+		<ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>{children}</ThemeProvider>
 	);
 };
 

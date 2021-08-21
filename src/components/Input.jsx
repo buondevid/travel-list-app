@@ -51,14 +51,25 @@ function Input() {
 		})();
 	}, []);
 
+	function handleSubmit(e) {
+		e.preventDefault();
+		const suggestionDiv = e.target.nextElementSibling;
+		if (inputValue?.trim() !== '' && suggestionDiv.firstChild) {
+			setInputValue(suggestionDiv.firstChild?.textContent);
+			suggestionDiv.firstChild?.focus();
+		}
+	}
+
 	return (
 		<>
-			<StyledInput
-				value={inputValue}
-				onChange={(e) => setInputValue(e.target.value)}
-				placeholder='Country I want to visit'
-				tabIndex={1}
-			/>
+			<form onSubmit={handleSubmit}>
+				<StyledInput
+					value={inputValue}
+					onChange={(e) => setInputValue(e.target.value)}
+					placeholder='Country I want to visit'
+					tabIndex={1}
+				/>
+			</form>
 			{inputValue && (
 				<Suggestions
 					allCountries={allCountries}

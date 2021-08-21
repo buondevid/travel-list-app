@@ -6,10 +6,10 @@ import Suggestion from './Suggestion';
 
 const appear = keyframes`
 	from {
-		transform: scaleX(0.1)
+		transform: scaleX(0.1);
 	}
 	to {
-		transform: scaleX(1) 
+		transform: scaleX(1) translateY(10%);
 		}`;
 
 const Div = styled.div`
@@ -17,7 +17,8 @@ const Div = styled.div`
 	z-index: 100;
 	left: 0;
 	right: 0;
-	min-width: 100vw;
+	min-width: 100%;
+	transform: translateY(10%);
 	text-align: center;
 	height: 6rem;
 	overflow-x: scroll;
@@ -32,7 +33,7 @@ const Div = styled.div`
 	}
 
 	&:empty::after {
-		content: 'No further country found for your query...';
+		content: 'No further countries found for your query...';
 		position: relative;
 		font-style: italic;
 		line-height: 6rem;
@@ -40,29 +41,31 @@ const Div = styled.div`
 `;
 
 /**
- * This functions filters an initial list of countries against the value
- * entered in the input and against the objects already existent in the
- * user todo list.
- * @param {object[]} initialList
- * @param {text} inputValue
- * @param {object[]} userList
- * @returns {object[]} An array of countries.
+ * This function-algorithm filters an `initialList` of countries against the `inputValue`
+ * entered and against the values already existent in `userList`. It makes use of RegExp
+ * so that it can match also words starting with desired value in the middle of the string.
+ * @returns {Array} An array of countries.
  */
 function filterCountries(initialList, userList, inputValue) {
 	const userListNames = userList.map(({ name }) => name.toLowerCase());
 
-	let arrFiltered = initialList.filter((country) => {
+	function escapeRegex(string) {
+		return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+	}
+
+	const arrFiltered = initialList.filter((country) => {
 		const countryName = country.name.toLowerCase();
 		const inputText = inputValue.toLowerCase();
-
-		return countryName.includes(inputText) && !userListNames.includes(countryName);
+		const inputEscaped = escapeRegex(inputText); // escape string for Reg Exp
+		const regex = new RegExp(`(\\b|^)${inputEscaped}`, 'g'); // match all words in a string that start with the query
+		return regex.test(countryName) && !userListNames.includes(countryName);
 	});
 
 	return arrFiltered;
 }
 
 // hack to enable horizontal scrolling with mouse wheel
-function handleScroll(e) {
+function handleHorizontalScroll(e) {
 	e.preventDefault();
 	const element = e.currentTarget;
 	element.scrollLeft += e.deltaY;
@@ -82,48 +85,57 @@ function Suggestions({ allCountries, inputValue, setInputValue }) {
 		]);
 	}
 
-	let listSuggestions;
-	if (inputValue && allCountries) {
-		const arrFiltered = filterCountries(allCountries, userCountries, inputValue);
-		listSuggestions = arrFiltered.map((country) => {
-			return <Suggestion key={country.name}>{country.name}</Suggestion>;
-		});
-	}
+	const arrFiltered = filterCountries(allCountries, userCountries, inputValue);
+	const listSuggestions = arrFiltered.map((country) => {
+		return <Suggestion key={country.name}>{country.name}</Suggestion>;
+	});
 
 	useEffect(() => {
-		const element = suggestionsDiv.current; // to be able to remove event listener on cleanup
+		const element = suggestionsDiv.current;
+
 		//this function handles the keyboard control of Suggestions
-		function handleKeyboard(e) {
+		function handleKeydown(e) {
 			const maxIndex = element?.children.length - 1;
 			switch (e.keyCode) {
 				case 40: //arrow-down
 					e.preventDefault();
-					element.children[index.current]?.focus();
+					index.current = 0;
+					element.firstElementChild?.focus();
 					break;
 				case 9: // tab
 				case 39: // arrow-right
-					element.children[index.current < maxIndex ? ++index.current : maxIndex]?.focus();
+					if (element.contains(document.activeElement))
+						element.children[index.current < maxIndex ? ++index.current : maxIndex]?.focus();
+
 					break;
 				case 37: // arrow-left
-					element.children[index.current > 0 ? --index.current : 0]?.focus();
+					if (element.contains(document.activeElement))
+						element.children[index.current > 0 ? --index.current : 0]?.focus();
 					break;
 				case 27: //esc
 				case 38: // arrow-up
-					e.preventDefault();
-					element.previousSibling?.focus();
+				case 8: // backspace
+					if (element.contains(document.activeElement)) {
+						e.preventDefault();
+						element.previousElementSibling?.firstChild.focus();
+					}
 					break;
 
 				default:
+					// if letter pressed, focus back input
+					if (/^[a-z]$/.test(e.key) && element.contains(document.activeElement)) {
+						element.previousElementSibling?.firstChild.focus();
+					}
 					break;
 			}
 		}
 
-		window.addEventListener('keydown', handleKeyboard);
-		element.addEventListener('wheel', handleScroll, { passive: false });
+		document.addEventListener('keydown', handleKeydown);
+		element.addEventListener('wheel', handleHorizontalScroll, { passive: false });
 
 		return () => {
-			window.removeEventListener('keydown', handleKeyboard);
-			element.removeEventListener('wheel', handleScroll);
+			document.removeEventListener('keydown', handleKeydown);
+			element.removeEventListener('wheel', handleHorizontalScroll);
 		};
 	}, []);
 

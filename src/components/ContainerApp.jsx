@@ -18,12 +18,12 @@ const Container = styled.div`
 	width: min(80vmin, 60rem);
 	margin: 5rem auto 10rem;
 	padding: 0.6rem;
-	border: 1px solid #ccc;
+	border: 1px solid ${({ theme }) => theme.colors.tertiary};
 	border-radius: 4px;
 	background-color: ${({ theme }) => theme.colors.tertiary};
 	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
 	animation: ${appear} 0.5s ease-in-out;
-	transition: background-color 1s linear;
+	transition: background-color 1s, border 1s;
 `;
 
 function ContainerApp() {
