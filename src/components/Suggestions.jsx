@@ -66,7 +66,13 @@ function handleScroll(e) {
 	element.scrollLeft += e.deltaY;
 }
 
-function Suggestions({ allCountries, inputValue, handleClickSuggestion, userCountries, setInputValue }) {
+function Suggestions({
+	allCountries,
+	inputValue,
+	handleClickSuggestion,
+	userCountries,
+	setInputValue,
+}) {
 	const suggestionsDiv = useRef();
 	const index = useRef(0);
 
@@ -85,26 +91,28 @@ function Suggestions({ allCountries, inputValue, handleClickSuggestion, userCoun
 	}
 
 	useEffect(() => {
-		//this function handles the keyboard control of the suggestions div
+		//this function handles the keyboard control of the Suggestion
 		function handleKeyboard(e) {
+			console.log(e);
 			const maxIndex = suggestionsDiv.current.children.length - 1;
 			switch (e.keyCode) {
 				case 40: //arrow-down
-					suggestionsDiv.current.children[0].focus();
-					break;
-				case 39: // arrow-right
 					e.preventDefault();
+					suggestionsDiv.current.children[index.current]?.focus();
+					break;
+				case 9: // tab
+				case 39: // arrow-right
 					suggestionsDiv.current.children[
 						index.current < maxIndex ? ++index.current : maxIndex
-					].focus();
+					]?.focus();
 					break;
 				case 37: // arrow-left
-					e.preventDefault();
-					suggestionsDiv.current.children[index.current > 0 ? --index.current : 0].focus();
+					suggestionsDiv.current.children[index.current > 0 ? --index.current : 0]?.focus();
 					break;
+				case 27: //esc
 				case 38: // arrow-up
 					e.preventDefault();
-					suggestionsDiv.current.previousSibling.focus();
+					suggestionsDiv.current.previousSibling?.focus();
 					break;
 
 				default:
@@ -116,7 +124,7 @@ function Suggestions({ allCountries, inputValue, handleClickSuggestion, userCoun
 	}, []);
 
 	return (
-		<Div ref={suggestionsDiv} tabIndex={1} onClick={handleClick} onWheel={handleScroll}>
+		<Div ref={suggestionsDiv} onClick={handleClick} onWheel={handleScroll}>
 			{listSuggestions}
 		</Div>
 	);

@@ -18,7 +18,7 @@ const appear = keyframes`
 
 const Container = styled.div`
 	width: min(80vmin, 60rem);
-	margin: 5rem auto;
+	margin: 5rem auto 10rem;
 	padding: 0.6rem;
 	border: 1px solid #ccc;
 	border-radius: 4px;

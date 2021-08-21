@@ -7,7 +7,7 @@ const StyledHeader = styled.header`
 `;
 
 const H1 = styled.h1`
-	font-size: 7rem;
+	font-size: min(7rem, 12vmin);
 	color: ${({ theme }) => theme.colors.secondary};
 	text-shadow: -1px -1px rgb(255, 225, 213);
 	transition: color 0.5s linear;

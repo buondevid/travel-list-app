@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Item from './Item';
@@ -12,11 +12,11 @@ const Icon = styled.button`
 	position: absolute;
 	bottom: -0%;
 	right: -8%;
+	height: 1.5em;
+	width: 1.5em;
 	transform: translateX(50%);
 	transform-origin: right;
 	font-size: 3rem;
-	height: 1.5em;
-	width: 1.5em;
 	border-radius: 50%;
 	z-index: 10;
 	border: none;
@@ -30,11 +30,16 @@ const Icon = styled.button`
 	&:hover:active {
 		transform: scale(1) translateX(50%);
 	}
+
+	@media (max-width: 768px) {
+		bottom: -8rem;
+		right: 49%;
+	}
 `;
 
 /**
- * This function sorts an array of objects by 2 properties:
- * it divides _visited countries_ from unvisited ones, and then
+ * Helper function that sorts this array of objects by 2 properties:
+ * it separate _visited countries_ from unvisited ones, and then
  * orders them alphabetically.
  * @param {boolean} putFirstVisitedCountries If true, the function
  * puts first visited countries; otherwise it puts first unvisited ones.
@@ -62,18 +67,24 @@ function compare(putBeforeVisitedCountries) {
 
 function ListItems({ userCountries, handleCheckboxChange, handleDeleteItem }) {
 	const [isDefaultOrder, setIsDefaultOrder] = useState(true);
+	console.log('ciao component');
 
-	const items = [...userCountries].sort(compare(isDefaultOrder)).map(({ name, isVisited }) => {
-		return (
-			<Item
-				key={name}
-				handleDeleteItem={handleDeleteItem}
-				country={name}
-				isVisited={isVisited}
-				handleCheckboxChange={handleCheckboxChange}
-			/>
-		);
-	});
+	const items = useMemo(
+		() =>
+			[...userCountries].sort(compare(isDefaultOrder)).map(({ name, isVisited }) => {
+				console.log('ciao');
+				return (
+					<Item
+						key={name}
+						handleDeleteItem={handleDeleteItem}
+						country={name}
+						isVisited={isVisited}
+						handleCheckboxChange={handleCheckboxChange}
+					/>
+				);
+			}),
+		[userCountries, isDefaultOrder]
+	);
 
 	const title = isDefaultOrder
 		? 'Click to put visited places first'
