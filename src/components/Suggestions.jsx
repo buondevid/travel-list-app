@@ -67,15 +67,11 @@ function handleScroll(e) {
 	element.scrollLeft += e.deltaY;
 }
 
-function Suggestions({
-	allCountries,
-	inputValue,
-	handleClickSuggestion,
-	userCountries,
-	setInputValue,
-}) {
+function Suggestions({ allCountries, inputValue, userCountries, handleClickSuggestion }) {
 	const suggestionsDiv = useRef();
 	const index = useRef(0);
+
+	console.log('Suggestion userCountries', userCountries);
 
 	let listSuggestions;
 
@@ -92,7 +88,7 @@ function Suggestions({
 	}
 
 	useEffect(() => {
-		//this function handles the keyboard control of the Suggestion
+		//this function handles the keyboard control of Suggestions
 		function handleKeyboard(e) {
 			const maxIndex = suggestionsDiv.current?.children.length - 1;
 			switch (e.keyCode) {

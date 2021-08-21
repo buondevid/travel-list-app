@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import useLocalStorage from './custom hooks/useLocalStorage';
 import ListItems from './ListItems';
 import Input from './Input';
-import Suggestions from './Suggestions';
 
 const appear = keyframes`
 	from {
@@ -36,13 +34,7 @@ const initialState = [
 ];
 
 function ContainerApp() {
-	const [inputValue, setInputValue] = useState('');
-	const [allCountries, setAllCountries] = useState(null);
 	const [userCountries, setUserCountries] = useLocalStorage(initialState, 'userCountries');
-
-	function handleInputChange(value) {
-		setInputValue(value);
-	}
 
 	function handleDeleteItem(countryName) {
 		const index = userCountries.findIndex((country) => {
@@ -65,43 +57,9 @@ function ContainerApp() {
 		setUserCountries(tempArr);
 	}
 
-	function handleClickSuggestion(clickedTag) {
-		setInputValue('');
-		setUserCountries((previousState) => [
-			...previousState,
-			{ name: clickedTag.textContent, isVisited: false },
-		]);
-	}
-
-	useEffect(() => {
-		(async function getAllCountries() {
-			let arrayOfCountries;
-			const response = await fetch(`https://restcountries.eu/rest/v2/all`);
-			if (response.ok) {
-				arrayOfCountries = await response.json();
-			} else {
-				alert(
-					`${response.status}: There was a problem while fetching external data, try refreshing the page or come back later`
-				);
-			}
-
-			setAllCountries(arrayOfCountries);
-		})();
-	}, []);
-
 	return (
 		<Container>
-			<Input handleInputChange={handleInputChange} inputValue={inputValue} />
-
-			{inputValue && (
-				<Suggestions
-					handleClickSuggestion={handleClickSuggestion}
-					allCountries={allCountries}
-					inputValue={inputValue}
-					userCountries={userCountries}
-					setInputValue={setInputValue}
-				/>
-			)}
+			<Input userCountries={userCountries} setUserCountries={setUserCountries} />
 
 			<ListItems
 				handleDeleteItem={handleDeleteItem}
