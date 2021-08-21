@@ -1,4 +1,8 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+
+import UserCountriesContext from './ctx/UserCountriesContext';
+
 
 const Li = styled.li`
 	position: relative;
@@ -28,7 +32,8 @@ const Input = styled.input`
 		transform: scale(1.2);
 	}
 
-	&:checked label {
+	&:checked {
+		opacity: 0.5;
 	}
 `;
 
@@ -40,6 +45,11 @@ const Label = styled.label`
 		font-style: italic;
 		font-size: 1.5rem;
 		margin-left: 3rem;
+		opacity: 0.5;
+
+		&::after {
+			content: ' 🚀';
+		}
 	}
 `;
 
@@ -75,9 +85,26 @@ const DeleteButton = styled.button`
 	}
 `;
 
-function Item({ country, isVisited, handleCheckboxChange, handleDeleteItem }) {
-	function handleDelete(e) {
-		handleDeleteItem(e.target.previousSibling.htmlFor);
+function Item({ country, isVisited }) {
+	const { userCountries, setUserCountries } = useContext(UserCountriesContext);
+
+	function handleDeleteItem(e) {
+		const index = userCountries.findIndex((country) => {
+			return country.name === e.target.previousSibling.htmlFor;
+		});
+		let tempArr = [...userCountries];
+		tempArr.splice(index, 1);
+		setUserCountries(tempArr);
+	}
+
+	function handleCheckboxChange(e) {
+		const target = e.currentTarget;
+		const index = userCountries.findIndex((country) => {
+			return country.name === target.id;
+		});
+		let tempArr = [...userCountries];
+		tempArr[index].isVisited = target.checked;
+		setUserCountries(tempArr);
 	}
 
 	return (
@@ -85,7 +112,7 @@ function Item({ country, isVisited, handleCheckboxChange, handleDeleteItem }) {
 			<Div>
 				<Input id={country} type='checkbox' checked={isVisited} onChange={handleCheckboxChange} />
 				<Label htmlFor={country}>{country}</Label>
-				<DeleteButton onClick={handleDelete}>ｘ</DeleteButton>
+				<DeleteButton onClick={handleDeleteItem}>ｘ</DeleteButton>
 			</Div>
 		</Li>
 	);

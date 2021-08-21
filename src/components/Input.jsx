@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 import Suggestions from './Suggestions';
 
@@ -9,6 +8,7 @@ const StyledInput = styled.input`
 	appearance: none;
 	outline: none;
 	text-overflow: ellipsis;
+	color: ${({ theme }) => (theme.name === 'dark' ? theme.colors.secondary : 'black')};
 	border: 1px solid ${({ theme }) => theme.colors.text_secondary};
 	border-radius: 4px;
 	width: 100%;
@@ -31,18 +31,9 @@ const StyledInput = styled.input`
 	}
 `;
 
-function Input({ userCountries, setUserCountries }) {
+function Input() {
 	const [inputValue, setInputValue] = useState('');
 	const [allCountries, setAllCountries] = useState(null);
-	console.log('Input userCountries:', userCountries);
-
-	function handleClickSuggestion(clickedTag) {
-		setInputValue('');
-		setUserCountries((previousState) => [
-			...previousState,
-			{ name: clickedTag.textContent, isVisited: false },
-		]);
-	}
 
 	useEffect(() => {
 		(async function getAllCountries() {
@@ -66,28 +57,17 @@ function Input({ userCountries, setUserCountries }) {
 				value={inputValue}
 				onChange={(e) => setInputValue(e.target.value)}
 				placeholder='Country I want to visit'
+				tabIndex={1}
 			/>
 			{inputValue && (
 				<Suggestions
 					allCountries={allCountries}
-					userCountries={userCountries}
 					inputValue={inputValue}
 					setInputValue={setInputValue}
-					handleClickSuggestion={handleClickSuggestion}
 				/>
 			)}
 		</>
 	);
 }
-
-Input.propTypes = {
-	userCountries: PropTypes.arrayOf(
-		PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			isVisited: PropTypes.bool.isRequired,
-		})
-	).isRequired,
-	setUserCountries: PropTypes.func.isRequired,
-};
 
 export default Input;

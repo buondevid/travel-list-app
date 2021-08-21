@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
+import UserCountriesContext from './ctx/UserCountriesContext';
 import Item from './Item';
 
 const Ul = styled.ul`
@@ -50,38 +51,33 @@ function compare(putBeforeVisitedCountries) {
 		const { name: countryB, isVisited: isVisitedB } = b;
 
 		let comparison = 0;
-
 		if (isVisitedA - isVisitedB !== 0) {
 			comparison = isVisitedB - isVisitedA;
 			return putBeforeVisitedCountries ? comparison * -1 : comparison;
 		}
-
 		if (countryA > countryB) {
 			comparison = 1;
 		} else if (countryA < countryB) {
 			comparison = -1;
 		}
+
 		return comparison;
 	};
 }
 
-function ListItems({ userCountries, handleCheckboxChange, handleDeleteItem }) {
+function ListItems() {
+	const { userCountries } = useContext(UserCountriesContext);
 	const [isDefaultOrder, setIsDefaultOrder] = useState(true);
-	console.log('ciao component');
+
+	function handleIconClick(e) {
+		e.stopPropagation();
+		setIsDefaultOrder((previousState) => !previousState);
+	}
 
 	const items = useMemo(
 		() =>
 			[...userCountries].sort(compare(isDefaultOrder)).map(({ name, isVisited }) => {
-				console.log('ciao');
-				return (
-					<Item
-						key={name}
-						handleDeleteItem={handleDeleteItem}
-						country={name}
-						isVisited={isVisited}
-						handleCheckboxChange={handleCheckboxChange}
-					/>
-				);
+				return <Item key={name} country={name} isVisited={isVisited} />;
 			}),
 		[userCountries, isDefaultOrder]
 	);
@@ -89,11 +85,6 @@ function ListItems({ userCountries, handleCheckboxChange, handleDeleteItem }) {
 	const title = isDefaultOrder
 		? 'Click to put visited places first'
 		: 'Click to put unvisited places first';
-
-	function handleIconClick(e) {
-		e.stopPropagation();
-		setIsDefaultOrder((previousState) => !previousState);
-	}
 
 	return (
 		<Ul>

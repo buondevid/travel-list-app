@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+import UserCountriesContext from './ctx/UserCountriesContext';
 import Suggestion from './Suggestion';
 
 const appear = keyframes`
@@ -31,7 +32,7 @@ const Div = styled.div`
 	}
 
 	&:empty::after {
-		content: 'No country found for your query...';
+		content: 'No further country found for your query...';
 		position: relative;
 		font-style: italic;
 		line-height: 6rem;
@@ -60,21 +61,28 @@ function filterCountries(initialList, userList, inputValue) {
 	return arrFiltered;
 }
 
-//enable horizontal scrolling with mouse wheel
+// hack to enable horizontal scrolling with mouse wheel
 function handleScroll(e) {
 	e.preventDefault();
 	const element = e.currentTarget;
 	element.scrollLeft += e.deltaY;
 }
 
-function Suggestions({ allCountries, inputValue, userCountries, handleClickSuggestion }) {
+function Suggestions({ allCountries, inputValue, setInputValue }) {
+	const { userCountries, setUserCountries } = useContext(UserCountriesContext);
 	const suggestionsDiv = useRef();
 	const index = useRef(0);
 
-	console.log('Suggestion userCountries', userCountries);
+	function handleClickSuggestion(e) {
+		if (e.target === e.currentTarget) return;
+		setInputValue('');
+		setUserCountries((previousState) => [
+			...previousState,
+			{ name: e.target.textContent, isVisited: false },
+		]);
+	}
 
 	let listSuggestions;
-
 	if (inputValue && allCountries) {
 		const arrFiltered = filterCountries(allCountries, userCountries, inputValue);
 		listSuggestions = arrFiltered.map((country) => {
@@ -82,33 +90,27 @@ function Suggestions({ allCountries, inputValue, userCountries, handleClickSugge
 		});
 	}
 
-	function handleClick(e) {
-		e.preventDefault();
-		e.target !== e.currentTarget && handleClickSuggestion(e.target);
-	}
-
 	useEffect(() => {
+		const element = suggestionsDiv.current; // to be able to remove event listener on cleanup
 		//this function handles the keyboard control of Suggestions
 		function handleKeyboard(e) {
-			const maxIndex = suggestionsDiv.current?.children.length - 1;
+			const maxIndex = element?.children.length - 1;
 			switch (e.keyCode) {
 				case 40: //arrow-down
 					e.preventDefault();
-					suggestionsDiv.current.children[index.current]?.focus();
+					element.children[index.current]?.focus();
 					break;
 				case 9: // tab
 				case 39: // arrow-right
-					suggestionsDiv.current.children[
-						index.current < maxIndex ? ++index.current : maxIndex
-					]?.focus();
+					element.children[index.current < maxIndex ? ++index.current : maxIndex]?.focus();
 					break;
 				case 37: // arrow-left
-					suggestionsDiv.current.children[index.current > 0 ? --index.current : 0]?.focus();
+					element.children[index.current > 0 ? --index.current : 0]?.focus();
 					break;
 				case 27: //esc
 				case 38: // arrow-up
 					e.preventDefault();
-					suggestionsDiv.current.previousSibling?.focus();
+					element.previousSibling?.focus();
 					break;
 
 				default:
@@ -117,16 +119,16 @@ function Suggestions({ allCountries, inputValue, userCountries, handleClickSugge
 		}
 
 		window.addEventListener('keydown', handleKeyboard);
-		suggestionsDiv.current.addEventListener('wheel', handleScroll, { passive: false });
+		element.addEventListener('wheel', handleScroll, { passive: false });
 
 		return () => {
 			window.removeEventListener('keydown', handleKeyboard);
-			suggestionsDiv.current?.removeEventListener('wheel', handleScroll);
+			element.removeEventListener('wheel', handleScroll);
 		};
 	}, []);
 
 	return (
-		<Div ref={suggestionsDiv} onClick={handleClick}>
+		<Div ref={suggestionsDiv} onClick={handleClickSuggestion}>
 			{listSuggestions}
 		</Div>
 	);

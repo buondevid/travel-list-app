@@ -1,3 +1,5 @@
+// component not used because merged all-in-one with context
+
 import { useEffect, useState } from 'react';
 
 function useLocalStorage(initialValue, key) {
@@ -12,4 +14,4 @@ function useLocalStorage(initialValue, key) {
 	return [value, setValue];
 }
 
-export default useLocalStorage;
+// component not used because merged all-in-one with context

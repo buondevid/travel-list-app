@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 
-import useLocalStorage from './custom hooks/useLocalStorage';
 import ListItems from './ListItems';
 import Input from './Input';
+import { UserContextProvider } from './ctx/UserCountriesContext';
 
 const appear = keyframes`
 	from {
@@ -26,47 +26,14 @@ const Container = styled.div`
 	transition: background-color 1s linear;
 `;
 
-const initialState = [
-	{ name: 'Italy', isVisited: true },
-	{ name: 'Norway', isVisited: true },
-	{ name: 'Brazil', isVisited: false },
-	{ name: 'Sweden', isVisited: false },
-];
-
 function ContainerApp() {
-	const [userCountries, setUserCountries] = useLocalStorage(initialState, 'userCountries');
-
-	function handleDeleteItem(countryName) {
-		const index = userCountries.findIndex((country) => {
-			return country.name === countryName;
-		});
-
-		let tempArr = [...userCountries];
-		tempArr.splice(index, 1);
-
-		setUserCountries(tempArr);
-	}
-
-	function handleCheckboxChange(e) {
-		const target = e.currentTarget;
-		const index = userCountries.findIndex((country) => {
-			return country.name === target.id;
-		});
-		let tempArr = [...userCountries];
-		tempArr[index].isVisited = target.checked;
-		setUserCountries(tempArr);
-	}
-
 	return (
-		<Container>
-			<Input userCountries={userCountries} setUserCountries={setUserCountries} />
-
-			<ListItems
-				handleDeleteItem={handleDeleteItem}
-				handleCheckboxChange={handleCheckboxChange}
-				userCountries={userCountries}
-			/>
-		</Container>
+		<UserContextProvider>
+			<Container>
+				<Input />
+				<ListItems />
+			</Container>
+		</UserContextProvider>
 	);
 }
 

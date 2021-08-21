@@ -1,19 +1,25 @@
-import { useState } from 'react';
-import GlobalStyle from './components/styles/GlobalStyles';
+import { useState, useEffect } from 'react';
 
-import Header from './components/Header';
 import ContainerApp from './components/ContainerApp';
+import Header from './components/Header';
+import GlobalStyle from './components/styles/GlobalStyles';
 import Theme from './components/styles/Theme';
 
 function App() {
-	const [theme, setTheme] = useState('light');
+	const [theme, setTheme] = useState(() => {
+		const localTheme = window.localStorage.getItem('theme');
+		return localTheme ? localTheme : 'light';
+	});
+
+	useEffect(() => {
+		window.localStorage.setItem('theme', theme);
+	}, [theme]);
 
 	return (
 		<>
-			<Theme chooseTheme={theme}>
+			<Theme theme={theme}>
 				<GlobalStyle />
-				<Header theme={theme }chooseTheme={setTheme} />
-
+				<Header setTheme={setTheme} />
 				<main>
 					<ContainerApp />
 				</main>

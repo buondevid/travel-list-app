@@ -23,9 +23,9 @@ const themeDark = {
 	},
 };
 
-const Theme = ({ children, chooseTheme }) => {
+const Theme = ({ children, theme }) => {
 	return (
-		<ThemeProvider theme={chooseTheme === 'light' ? themeLight : themeDark}>
+		<ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
 			{children}
 		</ThemeProvider>
 	);
