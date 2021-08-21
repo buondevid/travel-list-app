@@ -62,6 +62,7 @@ function filterCountries(initialList, userList, inputValue) {
 
 //enable horizontal scrolling with mouse wheel
 function handleScroll(e) {
+	e.preventDefault();
 	const element = e.currentTarget;
 	element.scrollLeft += e.deltaY;
 }
@@ -93,8 +94,7 @@ function Suggestions({
 	useEffect(() => {
 		//this function handles the keyboard control of the Suggestion
 		function handleKeyboard(e) {
-			console.log(e);
-			const maxIndex = suggestionsDiv.current.children.length - 1;
+			const maxIndex = suggestionsDiv.current?.children.length - 1;
 			switch (e.keyCode) {
 				case 40: //arrow-down
 					e.preventDefault();
@@ -119,12 +119,18 @@ function Suggestions({
 					break;
 			}
 		}
+
 		window.addEventListener('keydown', handleKeyboard);
-		return () => window.removeEventListener('keydown', handleKeyboard);
+		suggestionsDiv.current.addEventListener('wheel', handleScroll, { passive: false });
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyboard);
+			suggestionsDiv.current?.removeEventListener('wheel', handleScroll);
+		};
 	}, []);
 
 	return (
-		<Div ref={suggestionsDiv} onClick={handleClick} onWheel={handleScroll}>
+		<Div ref={suggestionsDiv} onClick={handleClick}>
 			{listSuggestions}
 		</Div>
 	);
