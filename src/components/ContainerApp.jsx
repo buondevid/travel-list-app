@@ -6,7 +6,7 @@ import UserContextProvider from './ctx/UserCountriesContext';
 
 const appear = keyframes`
 	from {
-		transform: translateY(5rem);
+		transform: translateY(2rem);
 		opacity: 0;
 	}
 	to {

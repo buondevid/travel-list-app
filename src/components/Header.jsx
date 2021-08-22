@@ -1,9 +1,18 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
+
+const appear = keyframes`
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		}`;
 
 const StyledHeader = styled.header`
 	margin: 5% 0;
 	text-align: center;
+	animation: ${appear} 0.5s;
 `;
 
 const H1 = styled.h1`
@@ -11,6 +20,7 @@ const H1 = styled.h1`
 	color: ${({ theme }) => theme.colors.secondary};
 	text-shadow: -1px -1px rgb(255, 225, 213);
 	transition: color 0.5s linear;
+	animation: ${appear} 0.5s ease-in-out;
 `;
 
 const Button = styled.button`

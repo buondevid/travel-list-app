@@ -58,7 +58,7 @@ function filterCountries(initialList, userList, inputValue) {
 		const countryName = country.name.toLowerCase();
 		const inputText = inputValue.toLowerCase();
 		const inputEscaped = escapeRegex(inputText); // escape string for Reg Exp
-		const regex = new RegExp(`(\\b|^)${inputEscaped}`, 'g'); // match all words in a string that start with the query
+		const regex = new RegExp(`(\\s|^)${inputEscaped}`, 'g'); // match all words in a string that start with the query
 		return regex.test(countryName) && !userListNames.includes(countryName);
 	});
 
