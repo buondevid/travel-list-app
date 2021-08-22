@@ -1,7 +1,7 @@
 import { useContext, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
-import UserCountriesContext from './ctx/UserCountriesContext';
+import { UserCountriesContext } from './ctx/UserCountriesContext';
 import Item from './Item';
 
 const Ul = styled.ul`
@@ -9,7 +9,7 @@ const Ul = styled.ul`
 	list-style-type: none;
 `;
 
-const Icon = styled.button`
+const SortIcon = styled.button`
 	position: absolute;
 	bottom: -0%;
 	right: -8%;
@@ -23,6 +23,7 @@ const Icon = styled.button`
 	border: none;
 	background: ${({ theme }) => theme.colors.secondary};
 	transition: all 0.3s;
+	cursor: pointer;
 
 	&:hover {
 		transform: scale(1.2) translateX(50%);
@@ -88,9 +89,9 @@ function ListItems() {
 
 	return (
 		<Ul>
-			<Icon title={title} onClick={handleIconClick}>
+			<SortIcon title={title} onClick={handleIconClick}>
 				{isDefaultOrder ? '📍' : '✈️'}
-			</Icon>
+			</SortIcon>
 			{items}
 		</Ul>
 	);

@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 import ListItems from './ListItems';
 import Input from './Input';
-import { UserContextProvider } from './ctx/UserCountriesContext';
+import UserContextProvider from './ctx/UserCountriesContext';
 
 const appear = keyframes`
 	from {

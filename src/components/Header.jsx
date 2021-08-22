@@ -19,6 +19,7 @@ const Button = styled.button`
 	margin: 1rem;
 	transform: translateY(-35vh);
 	transition: all 1s ease-in-out;
+	cursor: pointer;
 `;
 
 const ButtonSun = styled(Button)`

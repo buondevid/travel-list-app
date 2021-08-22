@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 
-import UserCountriesContext from './ctx/UserCountriesContext';
-
+import { UserCountriesContext } from './ctx/UserCountriesContext';
 
 const Li = styled.li`
 	position: relative;

@@ -13,6 +13,13 @@
 </head>
 
 <body>
+	<!-- remove flickering on refresh: -->
+	<script>
+		const theme = window.localStorage.getItem('theme');
+		if (theme) document.body.style.backgroundColor = (theme === 'light' ? '#efd0ca' : '#8d7d77');
+		else document.body.style.backgroundColor = '#efd0ca';
+		setTimeout(() => document.body.style.backgroundColor = '', 500);
+	</script>
 	<noscript>You need to enable JavaScript to run this app.</noscript>
 	<div id="root"></div>
 </body>

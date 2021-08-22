@@ -36,4 +36,4 @@ export const UserContextProvider = (props) => {
 	);
 };
 
-export default UserCountriesContext;
+export default UserContextProvider;

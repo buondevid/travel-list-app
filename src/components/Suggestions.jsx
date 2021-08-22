@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import UserCountriesContext from './ctx/UserCountriesContext';
+import { UserCountriesContext } from './ctx/UserCountriesContext';
 import Suggestion from './Suggestion';
 
 const appear = keyframes`
