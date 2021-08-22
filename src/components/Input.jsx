@@ -38,7 +38,7 @@ function Input() {
 	useEffect(() => {
 		(async function getAllCountries() {
 			let arrayOfCountries;
-			const response = await fetch(`https://restcountries.eu/rest/v2/all`);
+			const response = await fetch(`https://restcountries.eu/rest/v2/all?fields=name;`);
 			if (response.ok) {
 				arrayOfCountries = await response.json();
 			} else {
