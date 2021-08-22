@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
+import useLocalStorageCountries from './hooks/useLocalStorage';
 import Suggestions from './Suggestions';
 
 const StyledInput = styled.input`
@@ -33,23 +34,7 @@ const StyledInput = styled.input`
 
 function Input() {
 	const [inputValue, setInputValue] = useState('');
-	const [allCountries, setAllCountries] = useState(null);
-
-	useEffect(() => {
-		(async function getAllCountries() {
-			let arrayOfCountries;
-			const response = await fetch(`https://restcountries.eu/rest/v2/all?fields=name;`);
-			if (response.ok) {
-				arrayOfCountries = await response.json();
-			} else {
-				alert(
-					`${response.status}: There was a problem while fetching external data, try refreshing the page or come back later`
-				);
-			}
-
-			setAllCountries(arrayOfCountries);
-		})();
-	}, []);
+	const [allCountries, isAllCountriesEmpty] = useLocalStorageCountries('worldCountries');
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -66,8 +51,13 @@ function Input() {
 				<StyledInput
 					value={inputValue}
 					onChange={(e) => setInputValue(e.target.value)}
-					placeholder='Country I want to visit'
+					placeholder={
+						isAllCountriesEmpty
+							? 'A list of all countries is not available at the moment'
+							: 'Country I want to visit'
+					}
 					tabIndex={1}
+					disabled={isAllCountriesEmpty}
 				/>
 			</form>
 			{inputValue && (

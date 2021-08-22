@@ -1,20 +1,8 @@
 import { useContext } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { UserCountriesContext } from './ctx/UserCountriesContext';
-
-const rocket = keyframes`
-	0% {
-		transform: translateX(100rem);
-	},
-	90% {
-		transform: translateX(0);
-	},
-	100% {
-		transform: rotate(0) translateX(0);
-	}
-`;
 
 const Li = styled.li`
 	position: relative;
@@ -30,8 +18,6 @@ const Li = styled.li`
 const Div = styled.div`
 	padding: 0 1rem;
 	vertical-align: middle;
-	/* ${({ done }) => done && 'left: 50%;'}; */
-	transition: all 0.3s;
 `;
 
 const Input = styled.input`
@@ -56,21 +42,29 @@ const Label = styled.label`
 	transition: all 0.5s;
 	color: ${({ theme }) => theme.colors.text_primary};
 
+	&::after {
+		content: '';
+		width: 0%;
+		border-bottom: solid 2px ${({ theme }) => theme.colors.secondary};
+		position: absolute;
+		left: 0%;
+		top: 50%;
+		transform: rotate(-45deg);
+	}
+
 	${Input}:checked ~ & {
 		font-style: italic;
 		font-size: 1.5rem;
-		/* margin-left: 3rem; */
 		opacity: 0.5;
 
 		&::after {
-			content: '';
-			width: 100%;
-			border-bottom: solid 1px ${({theme})=> theme.colors.text_primary};
-			position: absolute;
-			left: 0;
-			top: 50%;
-			transform: rotate(-45deg)
+			transition: width 0.3s;
+			width: min(3.5em, 100%);
 		}
+	}
+
+	&&:hover::after {
+		width: 0%;
 	}
 `;
 
@@ -130,7 +124,7 @@ function Item({ country, isVisited }) {
 
 	return (
 		<Li>
-			<Div done={isVisited}>
+			<Div>
 				<Input id={country} type='checkbox' checked={isVisited} onChange={handleCheckboxChange} />
 				<Label htmlFor={country}>{country}</Label>
 				<DeleteButton onClick={handleDeleteItem}>ｘ</DeleteButton>
