@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Button = styled.button`
 	position: relative;
@@ -22,5 +23,9 @@ const Button = styled.button`
 function Suggestion({ children }) {
 	return <Button tabIndex={10}>{children}</Button>;
 }
+
+Suggestion.propTypes = {
+	children: PropTypes.string.isRequired,
+};
 
 export default Suggestion;

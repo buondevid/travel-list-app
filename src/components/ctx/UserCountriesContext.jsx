@@ -1,5 +1,5 @@
-import { createContext } from 'react';
-import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { createContext, useEffect, useState } from 'react';
 
 export const UserCountriesContext = createContext();
 
@@ -10,7 +10,7 @@ const initialState = [
 	{ name: 'Sweden', isVisited: false },
 ];
 
-export const UserContextProvider = (props) => {
+export const UserContextProvider = ({ children }) => {
 	const [userCountries, setUserCountries] = useState(initialState);
 
 	// check if Local Storage exists and fetch it
@@ -31,9 +31,13 @@ export const UserContextProvider = (props) => {
 
 	return (
 		<UserCountriesContext.Provider value={userCountriesContext}>
-			{props.children}
+			{children}
 		</UserCountriesContext.Provider>
 	);
+};
+
+UserContextProvider.propTypes = {
+	children: PropTypes.node.isRequired,
 };
 
 export default UserContextProvider;

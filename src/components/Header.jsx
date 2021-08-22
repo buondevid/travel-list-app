@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledHeader = styled.header`
 	margin: 5% 0;
@@ -41,5 +42,9 @@ function Header({ setTheme }) {
 		</StyledHeader>
 	);
 }
+
+Header.propTypes = {
+	setTheme: PropTypes.func.isRequired,
+};
 
 export default Header;

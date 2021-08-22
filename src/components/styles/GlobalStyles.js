@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 		display: flex;
 		flex-direction: column;
 		padding-top: 5rem;
-		background-color: ${({theme}) => theme.colors.primary};
+		background-color: ${({ theme }) => theme.colors.primary};
 		align-items: center;
 		font-size: 2rem;
 		height: 100vh;

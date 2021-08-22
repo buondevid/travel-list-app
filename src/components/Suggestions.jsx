@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 
 import { UserCountriesContext } from './ctx/UserCountriesContext';
 import Suggestion from './Suggestion';
@@ -145,5 +146,11 @@ function Suggestions({ allCountries, inputValue, setInputValue }) {
 		</Div>
 	);
 }
+
+Suggestions.propTypes = {
+	allCountries: PropTypes.array.isRequired,
+	inputValue: PropTypes.string.isRequired,
+	setInputValue: PropTypes.func.isRequired,
+};
 
 export default Suggestions;

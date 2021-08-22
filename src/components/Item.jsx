@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import { UserCountriesContext } from './ctx/UserCountriesContext';
 
@@ -116,5 +117,10 @@ function Item({ country, isVisited }) {
 		</Li>
 	);
 }
+
+Item.propTypes = {
+	country: PropTypes.string.isRequired,
+	isVisited: PropTypes.bool.isRequired,
+};
 
 export default Item;
