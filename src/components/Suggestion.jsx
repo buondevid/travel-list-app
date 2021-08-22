@@ -21,7 +21,7 @@ const Button = styled.button`
 `;
 
 function Suggestion({ children }) {
-	return <Button tabIndex={10}>{children}</Button>;
+	return <Button tabIndex={2}>{children}</Button>;
 }
 
 Suggestion.propTypes = {

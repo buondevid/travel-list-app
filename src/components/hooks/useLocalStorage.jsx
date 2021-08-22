@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * This custom hook runs a fetch on an external API on mount and store the data in the first
+ * item returned in the array. The second returned item it's just an helper variable to keep track
+ * of the _emptiness_ of the first value (null).
+ * @param {String} key The name under which you want to store your data in Local Storage
+ * @returns [allCountryArray, isEmpty]
+ */
 function useLocalStorageCountries(key) {
 	const [countries, setCountries] = useState(() => {
 		const localValue = window.localStorage.getItem(key);

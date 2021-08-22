@@ -11,7 +11,7 @@ const Ul = styled.ul`
 
 const SortIcon = styled.button`
 	position: absolute;
-	bottom: -0%;
+	bottom: 0%;
 	right: -8%;
 	height: 1.5em;
 	width: 1.5em;
@@ -35,7 +35,7 @@ const SortIcon = styled.button`
 
 	@media (max-width: 768px) {
 		bottom: -8rem;
-		right: 49%;
+		right: 50%;
 	}
 `;
 

@@ -2,7 +2,6 @@ import styled, { keyframes } from 'styled-components';
 
 import ListItems from './ListItems';
 import Input from './Input';
-import UserContextProvider from './ctx/UserCountriesContext';
 
 const appear = keyframes`
 	from {
@@ -28,12 +27,10 @@ const Container = styled.div`
 
 function ContainerApp() {
 	return (
-		<UserContextProvider>
-			<Container>
-				<Input />
-				<ListItems />
-			</Container>
-		</UserContextProvider>
+		<Container>
+			<Input />
+			<ListItems />
+		</Container>
 	);
 }
 
