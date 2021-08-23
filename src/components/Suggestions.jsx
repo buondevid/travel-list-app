@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -74,6 +74,8 @@ function handleHorizontalScroll(e) {
 
 function Suggestions({ allCountries, inputValue, setInputValue }) {
 	const { userCountries, setUserCountries } = useContext(UserCountriesContext);
+	/* state for debouncing, the initialState is useful to not let the CSS selector :empty kick in on mount*/
+	const [listSuggestions, setListSuggestions] = useState(' ');
 	const suggestionsDiv = useRef();
 	const index = useRef(0);
 
@@ -86,15 +88,24 @@ function Suggestions({ allCountries, inputValue, setInputValue }) {
 		]);
 	}
 
-	const arrFiltered = filterCountries(allCountries, userCountries, inputValue);
-	const listSuggestions = arrFiltered.map((country) => {
-		return <Suggestion key={country.name}>{country.name}</Suggestion>;
-	});
+	// this Effect debounces the filtering
+	useEffect(() => {
+		let debounceTimer = setTimeout(() => {
+			const arrFiltered = filterCountries(allCountries, userCountries, inputValue).map(
+				(country) => {
+					return <Suggestion key={country.name}>{country.name}</Suggestion>;
+				}
+			);
+			setListSuggestions(arrFiltered);
+		}, 300);
 
+		return () => clearTimeout(debounceTimer);
+	}, [inputValue, allCountries, userCountries]);
+
+	//this Effect handles the keyboard control over Suggestions
 	useEffect(() => {
 		const element = suggestionsDiv.current;
 
-		//this function handles the keyboard control of Suggestions
 		function handleKeydown(e) {
 			const maxIndex = element?.children.length - 1;
 			switch (e.keyCode) {
