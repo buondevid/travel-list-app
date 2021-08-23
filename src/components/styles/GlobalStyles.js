@@ -40,6 +40,10 @@ const GlobalStyle = createGlobalStyle`
  		-o-font-smoothing: antialiased;
 	}
 
+	.textSVG {
+		fill: ${({ theme }) => theme.colors.secondary};
+	}
+
 `;
 
 export default GlobalStyle;

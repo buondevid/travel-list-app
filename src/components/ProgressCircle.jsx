@@ -27,10 +27,17 @@ const Circle = ({ colour, pct }) => {
 const Text = ({ percentage }) => {
 	return (
 		<>
-			<text x='50%' y='45%' dominantBaseline='central' textAnchor='middle' fontSize={'1em'}>
+			<text
+				x='50%'
+				y='45%'
+				class='textSVG'
+				dominantBaseline='central'
+				textAnchor='middle'
+				fontSize={'1em'}
+			>
 				{percentage.toFixed(0)}% 🌎
 			</text>
-			<text x='37%' y='60%'>
+			<text class='textSVG' x='37%' y='60%'>
 				visited
 			</text>
 		</>
