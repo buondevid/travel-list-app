@@ -1,6 +1,6 @@
 {
-	"name": "travel-to-list",
-	"homepage": "https://myusername.github.io/travel-to-app",
+	"name": "travel-list-app",
+	"homepage": "https://myusername.github.io/travel-list-app",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {

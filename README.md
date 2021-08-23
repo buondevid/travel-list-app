@@ -13,8 +13,8 @@ As soon as I'm allowed, we will have an online Demo to try without installing an
 In the meanwhile, to run this project locally open your __terminal__, clone this repository on your computer and go into the new folder just created:
 
 ```zsh
-git clone git@github.com:buondevid/travel-to-app.git
-cd travel-to-app
+git clone git@github.com:buondevid/travel-list-app.git
+cd travel-list-app
 ```
 
 Then install the required dependencies with your preferred __package manager__:
@@ -63,13 +63,14 @@ Some of the implementations and features are:
 - Context + Local Storage
 - Global Theme + Local Storage
 - Custom Hook + Local Storage
-- Advanced RegExp usage for querying
-- Custom-built keyboard experience when looking for countries
+- Advanced **RegExp** usage for querying
+- Custom-built **keyboard experience** when looking for countries
 - Cool handmade algorithms for sorting and filtering
-- Horizontal scrolling with mouse wheel on autocompletion
+- **Horizontal scrolling** with mouse wheel on autocompletion
+- **Debounced** search to improve performance
 - Progress Circle updating in real-time
 - Responsive and mobile-friendly
-- API fetching with errors handling (in custom hook)
-- PropTypes
-- Simple architecture and little state used only where needed (low in the tree)
+- **API fetching** with errors handling (in custom hook)
+- **PropTypes**
+- Simple architecture and little state used only where really needed (down in the tree)
 - Clear documentation, only where and when needed
