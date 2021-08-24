@@ -8,9 +8,9 @@ https://user-images.githubusercontent.com/36935593/130372453-61b8a949-b0a6-431b-
 
 ## 🏁&nbsp; Getting Started
 
-As soon as I'm allowed, we will have an online Demo to try without installing anything.
+If you don't need to run it locally, you can [see it LIVE 🔗](https://buondevid.github.io/travel-list-app/).
 
-In the meanwhile, to run this project locally open your __terminal__, clone this repository on your computer and go into the new folder just created:
+Otherwise, to run this project locally open your __terminal__, clone this repository on your computer and go into the new folder just created:
 
 ```zsh
 git clone git@github.com:buondevid/travel-list-app.git
@@ -33,7 +33,7 @@ Finally, just run the app like so:
 npm run start
 ```
 
-After a short period of time, the web-app will launch on _http://localhost:3000_ inside your browser (if it's available), enjoy!
+After a short period of time, the web-app will launch on _http://localhost:3000_ inside your browser (if the port's available), enjoy!
 
 ## 🚀&nbsp; Description
 This minimalistic web-app lets you focus on and keep track of the only important thing: __travelling__!
