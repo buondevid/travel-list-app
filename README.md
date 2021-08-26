@@ -51,7 +51,7 @@ Other features:
 
 - __Storage__. Are you afraid to lose your precious list and your preferred theme? Don't be, all your data will be saved for the next time. Be sure to use always the same device though, we have no fancy authentication at the moment.
 
-- __Offline__. Are you on vacation in one of the destinations on the list but you're without internet and can't check it off the list? We all have been there... The web-app stores a list of all the countries of the world just in cases like this, no internet needed. You have to have used the app at least once before for this to work.
+- __Network Independent__. Are you on vacation in one of the destinations on the list and suddenly your internet disconnects? We all have been there... The web-app stores locally on your first access a list of all the countries of the world just in cases like this, so if your connection stops working while you're on the webpage, you'll be able to still keep access a recent list of countries to choose from!
 
 Good luck with your journey!
 
