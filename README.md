@@ -33,7 +33,7 @@ Finally, just run the app like so:
 npm run start
 ```
 
-After a short period of time, the web-app will launch on _http://localhost:3000_ inside your browser (if the port's available), enjoy!
+After a short period of time, the web-app will get launched on _http://localhost:3000_ inside your browser (if the port's available), enjoy!
 
 ## 🚀&nbsp; Description
 This minimalistic web-app lets you focus on and keep track of the only important thing: __travelling__!
