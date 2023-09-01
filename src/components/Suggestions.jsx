@@ -55,7 +55,7 @@ function filterCountries(initialList, userList, inputValue) {
 	}
 
 	const arrFiltered = initialList.filter((country) => {
-		const countryName = country.name.toLowerCase();
+		const countryName = country.name.common.toLowerCase();
 		const inputText = inputValue.toLowerCase();
 		const inputEscaped = escapeRegex(inputText); // escape string for Reg Exp
 		const regex = new RegExp(`(\\s|^)${inputEscaped}`, 'g'); // match all words in a string that start with the query
@@ -93,7 +93,7 @@ function Suggestions({ allCountries, inputValue, setInputValue }) {
 		let debounceTimer = setTimeout(() => {
 			const arrFiltered = filterCountries(allCountries, userCountries, inputValue).map(
 				(country) => {
-					return <Suggestion key={country.name}>{country.name}</Suggestion>;
+					return <Suggestion key={country.name.common}>{country.name.common}</Suggestion>;
 				}
 			);
 			setListSuggestions(arrFiltered);

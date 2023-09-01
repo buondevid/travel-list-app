@@ -30,14 +30,14 @@ const Text = ({ percentage }) => {
 			<text
 				x='50%'
 				y='45%'
-				class='textSVG'
+				className='textSVG'
 				dominantBaseline='central'
 				textAnchor='middle'
 				fontSize={'1em'}
 			>
 				{percentage.toFixed(0)}% 🌎
 			</text>
-			<text class='textSVG' x='37%' y='60%'>
+			<text className='textSVG' x='37%' y='60%'>
 				visited
 			</text>
 		</>

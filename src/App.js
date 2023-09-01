@@ -11,7 +11,7 @@ import Theme from './components/styles/Theme';
 const appear = keyframes`
 	from {
 		opacity: 0;;
-	},
+	}
 	to {
 		opacity: 0.5;
 	}

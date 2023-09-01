@@ -17,7 +17,7 @@ function useLocalStorageCountries(key) {
 	useEffect(() => {
 		(async function getAllCountries() {
 			try {
-				const response = await fetch(`https://restcountries.eu/rest/v2/all?fields=name;`, {cache: "no-store"});
+				const response = await fetch(`https://restcountries.com/v3.1/all?fields=name;`, {cache: "no-store"});
 				if (!response.ok) throw Error();
 				const arrayOfCountries = await response.json();
 				setCountries(arrayOfCountries);
